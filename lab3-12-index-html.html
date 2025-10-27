@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秋分书城</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #11a98388;
+            color: #333;
+        }
+
+        header {
+            background-color: #871f68;
+            padding: 25px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .container {
+            display: flex;
+            padding: 25px;
+            gap: 25px;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #279f7d;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #120a5c;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #791053;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #8c1818;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h2 {
+            margin-top: 0;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .book {
+            margin-bottom: 35px;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .book:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .book img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .promotions {
+            width: 280px;
+            background-color: #11596c;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .promotions h2 {
+            margin-top: 0;
+            color: #e44d4d;
+            border-bottom: 2px solid #4de48c;
+            padding-bottom: 10px;
+        }
+
+        .promotion-item {
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #121246;
+            border-radius: 5px;
+            background-color: #792e2e;
+        }
+
+        .promotion-item img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>秋日书城</h1>
+        <nav>
+            <a href="#">首页</a>
+            <a href="#">图书分类</a>
+            <a href="#">新书上市</a>
+            <a href="#">促销活动</a>
+            <a href="#">关于我们</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>图书分类导航</h2>
+            <ul>
+                <li>小说</li>
+                <li>科幻</li>
+                <li>历史</li>
+                <li>哲学</li>
+                <li>经济</li>
+                <li>艺术</li>
+                <li>经典</li>
+                <li>报刊</li>
+                <li>推荐</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <h2>热门推荐</h2>
+            <div class="book">
+                <img src="放学后..jpg" alt=" ">
+                <p>书名：《放学后》</p>
+                <p>$20.50</p>
+            </div>
+            <div class="book">
+                <img src="龙族3.jpg" alt="人类简史">
+                <p>书名：《龙族3》</p>
+                <p>$45.00</p>
+                </div>
+            <div class="book">
+                <img src="晴窗晨笔.jpg" alt=" ">
+                <p>书名:  《晴窗晨笔》</p>
+                <p>$25.00</p>
+            </div>
+            <div class="book">
+                <img src="三体.jpg" alt=" ">
+                <p>书名：  《三体》</p> 
+                <p>$30.00</p>
+            </div>
+        </div>
+
+        <div class="promotions">
+            <h2>促销信息</h2>
+            <div class="promotion-item">
+                <img src="我与地坛.jpg" alt=" ">
+                <p>劲爆八折仅需$20</p>
+            </div>
+            <div class="promotion-item">
+                <img src="书堆.jpg" alt=" ">
+                <p>满50减5 满100减20</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

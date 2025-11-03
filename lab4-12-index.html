@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知阅图书 - 数字展销平台</title>
+    <style>
+        /* 基础重置 + 全局变量 */
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #34495e;
+            --accent: #3498db;
+            --accent-hover: #2980b9;
+            --danger: #e74c3c;
+            --danger-hover: #c0392b;
+            --success: #2ecc71;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Inter", "PingFang SC", "Microsoft Yahei", sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            background-color: var(--light-bg);
+            line-height: 1.7;
+            padding-bottom: 40px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+        ul {
+            list-style: none;
+        }
+        .container {
+            width: 1280px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .mt-32 {
+            margin-top: 32px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* 固定导航栏 */
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            background: linear-gradient(120deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            backdrop-filter: blur(8px);
+        }
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 28px;
+            color: var(--accent);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        .logo-text::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        .logo-subtext {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+        .main-menu ul {
+            display: flex;
+            gap: 36px;
+        }
+        .main-menu li {
+            position: relative;
+        }
+        .main-menu a {
+            display: block;
+            padding: 4px 0;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+        .main-menu a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .main-menu a:hover::after {
+            width: 100%;
+        }
+        .submenu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            min-width: 140px;
+            background-color: white;
+            color: var(--text-main);
+            box-shadow: var(--shadow-md);
+            border-radius: 8px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 8px 0;
+        }
+        .submenu::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid white;
+        }
+        .submenu a {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .submenu a:hover {
+            background-color: var(--light-bg);
+            color: var(--accent);
+        }
+        .has-submenu:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 主体布局 */
+        .main-wrapper {
+            display: flex;
+            gap: 24px;
+            margin-top: 96px;
+            margin-bottom: 64px;
+        }
+        .sidebar {
+            width: 260px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            transition: var(--transition);
+        }
+        .sidebar:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .left-sidebar {
+            flex-shrink: 0;
+        }
+        .content-area {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            padding: 40px 32px;
+            transition: var(--transition);
+        }
+        .content-area:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .right-sidebar {
+            flex-shrink: 0;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .sidebar-title .icon {
+            font-size: 20px;
+            color: var(--accent);
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 6px;
+        }
+        .sidebar-title h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .category-list li {
+            margin-bottom: 14px;
+        }
+        .category-list a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .category-list a::before {
+            content: "→";
+            font-size: 12px;
+            color: var(--accent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .category-list a:hover {
+            background-color: var(--light-bg);
+            color: var(--accent);
+        }
+        .category-list a:hover::before {
+            opacity: 1;
+            margin-right: 4px;
+        }
+        .sidebar-banner {
+            margin-top: 24px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff8e1, #fff3cd);
+            border-radius: 10px;
+            color: #e6a23c;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(230, 162, 60, 0.1);
+        }
+        .sidebar-banner p:first-child {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .promo-card {
+            background: linear-gradient(135deg, #fff0f0, #ffebee);
+            border-radius: 10px;
+            padding: 20px;
+            color: var(--danger);
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(231, 76, 60, 0.1);
+            overflow: hidden;
+        }
+        .promo-card::before {
+            content: "🔥";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 40px;
+            opacity: 0.1;
+        }
+        .promo-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--danger);
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-weight: 500;
+        }
+        .promo-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .promo-card p {
+            position: relative;
+            z-index: 1;
+        }
+        .promo-time {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 12px;
+        }
+        .promo-btn {
+            display: block;
+            margin-top: 18px;
+            padding: 10px;
+            background-color: var(--danger);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        .promo-btn:hover {
+            background-color: var(--danger-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+        .notice-list li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .notice-list li:last-child {
+            border-bottom: none;
+        }
+        .notice-list a {
+            font-size: 15px;
+            display: block;
+            line-height: 1.5;
+        }
+        .notice-list a:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* 筛选栏（新增：按分类、价格筛选） */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 20px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .filter-item {
+            position: relative;
+        }
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+        }
+        .filter-select:hover {
+            border-color: var(--accent);
+        }
+        .filter-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 100%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: var(--shadow-md);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 90;
+        }
+        .filter-item:hover .filter-dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+        .filter-dropdown li {
+            padding: 8px 16px;
+        }
+        .filter-dropdown li:hover {
+            background-color: var(--light-bg);
+            color: var(--accent);
+        }
+        .filter-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-price input {
+            width: 80px;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .filter-price span {
+            color: var(--text-secondary);
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* 内容区样式 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-header h2::after {
+            content: "";
+            display: inline-block;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        .more-link {
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .more-link::after {
+            content: "→";
+            transition: var(--transition);
+        }
+        .more-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* 图书网格 + 图片放大预览（修复） */
+        .book-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+        .book-card {
+            width: 240px;
+            height: 400px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            z-index: 10; /* 确保卡片层级低于预览图 */
+        }
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .book-img-wrapper {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 16px 16px 0 0;
+            cursor: zoom-in;
+        }
+        .book-img-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05));
+            z-index: 1;
+        }
+        .book-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            transform: scale(1.02);
+        }
+        .book-img-wrapper:hover img {
+            transform: scale(1.08);
+        }
+        /* 图片放大预览（修复：确保悬停显示） */
+        .img-preview {
+            position: fixed; /* 改为fixed避免卡片层级遮挡 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 500px;
+            height: 750px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 999; /* 最高层级 */
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            pointer-events: none; /* 避免遮挡其他操作 */
+        }
+        .book-img-wrapper:hover + .img-preview,
+        .img-preview:hover {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .img-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 图书信息 + 遮罩详情 */
+        .book-info {
+            padding: 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .book-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+        }
+        .book-author {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .book-author::before {
+            content: "✎";
+            font-size: 12px;
+        }
+        .book-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .original-price {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+        }
+        .current-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        .book-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85));
+            color: white;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            transform: translateY(20px);
+            z-index: 20;
+            overflow-y: auto;
+        }
+        .book-card:hover .book-mask {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .mask-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            width: 100%;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .mask-detail-list {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .mask-detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .mask-detail-item span:first-child {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .mask-detail-item span:last-child {
+            font-weight: 500;
+        }
+        .mask-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .mask-btns {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .mask-btns .btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* 新书表格 */
+        .new-book-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            text-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-top: 8px;
+        }
+        .new-book-table th, .new-book-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .new-book-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 15px;
+        }
+        .new-book-table tr:last-child td {
+            border-bottom: none;
+        }
+        .new-book-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        .new-book-table tr td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* 购物车提示 */
+        .cart-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(46, 204, 113, 0.95);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .cart-toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cart-toast::before {
+            content: "✓";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            color: var(--success);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-weight: 700;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(120deg, var(--primary), var(--primary-light));
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 40px 0;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        .footer p {
+            margin-bottom: 8px;
+        }
+        .footer a {
+            color: var(--accent);
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 购物车提示 -->
+    <div class="cart-toast" id="cartToast">已成功加入购物车</div>
+
+    <!-- 导航栏 -->
+    <header class="nav-fixed">
+        <div class="container nav-wrapper">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <div>
+                    <div class="logo-text">知阅图书</div>
+                    <div class="logo-subtext">数字展销平台</div>
+                </div>
+            </div>
+            <nav class="main-menu">
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">分类筛选</a>
+                        <div class="submenu">
+                            <a href="#">文学小说</a>
+                            <a href="#">计算机技术</a>
+                            <a href="#">人文历史</a>
+                            <a href="#">生活百科</a>
+                        </div>
+                    </li>
+                    <li><a href="#">热门推荐</a></li>
+                    <li><a href="#">新书上市</a></li>
+                    <li><a href="#">限时促销</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主体布局 -->
+    <main class="container main-wrapper">
+        <!-- 左侧栏 -->
+        <aside class="sidebar left-sidebar">
+            <div class="sidebar-title">
+                <span class="icon">📑</span>
+                <h3>图书分类</h3>
+            </div>
+            <ul class="category-list">
+                <li><a href="#">文学小说</a></li>
+                <li><a href="#">计算机技术</a></li>
+                <li><a href="#">人文历史</a></li>
+                <li><a href="#">生活百科</a></li>
+                <li><a href="#">经济管理</a></li>
+                <li><a href="#">军事理论</a></li>
+                <li><a href="#">形势政策</a></li>
+                <li><a href="#">艺术设计</a></li>
+                <li><a href="#">未来科幻</a></li>
+                <li><a href="#">恐怖惊悚</a></li>
+                <li><a href="#">艺术设计</a></li>
+            </ul>
+
+            <div class="sidebar-banner">
+                <p>新人专享</p>
+                <p>首单立减20元</p>
+            </div>
+        </aside>
+
+        <!-- 中间内容区 -->
+        <section class="content-area">
+            <!-- 新增：筛选栏（分类+价格筛选） -->
+            <div class="filter-bar">
+                <div class="filter-item">
+                    <div class="filter-select">
+                        <span>图书分类</span>
+                        <span>▼</span>
+                    </div>
+                    <ul class="filter-dropdown">
+                        <li>全部分类</li>
+                        <li>文学小说</li>
+                        <li>计算机技术</li>
+                        <li>人文历史</li>
+                        <li>生活百科</li>
+                    </ul>
+                </div>
+                <div class="filter-item">
+                    <div class="filter-select">
+                        <span>价格区间</span>
+                        <span>▼</span>
+                    </div>
+                    <ul class="filter-dropdown">
+                        <li>全部价格</li>
+                        <li>0-50元</li>
+                        <li>50-100元</li>
+                        <li>100元以上</li>
+                    </ul>
+                </div>
+                <div class="filter-price">
+                    <input type="text" placeholder="最低价">
+                    <span>-</span>
+                    <input type="text" placeholder="最高价">
+                </div>
+                <button class="filter-btn">筛选</button>
+            </div>
+
+            <!-- 热门推荐 -->
+            <div class="section-header">
+                <h2>热门推荐</h2>
+                <a href="#" class="more-link">查看更多</a>
+            </div>
+            <div class="book-grid">
+                <!-- 图书卡片1 -->
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=1" alt="《HTML5权威指南》">
+                    </div>
+                    <!-- 图片放大预览（修复） -->
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=1" alt="《HTML5权威指南》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《HTML5权威指南》</h4>
+                        <p class="book-author">Web前端联盟</p>
+                        <div class="book-price">
+                            <span class="original-price">¥89.9</span>
+                            <span class="current-price">¥59.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《HTML5权威指南》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>Web前端联盟</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45678-9</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>前端技术出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-03-15</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★☆（4.8/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">HTML5+CSS3全栈开发教程，涵盖语义化标签、Canvas绘图、响应式布局等核心知识点，配套100+实战案例与源码。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 图书卡片2 -->
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=2" alt="《CSS3实战手册》">
+                    </div>
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=2" alt="《CSS3实战手册》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《CSS3实战手册》</h4>
+                        <p class="book-author">样式设计实验室</p>
+                        <div class="book-price">
+                            <span class="original-price">¥99.9</span>
+                            <span class="current-price">¥69.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《CSS3实战手册》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>样式设计实验室</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45679-6</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>视觉设计出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-04-20</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★★（4.9/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">聚焦CSS3核心特性：弹性布局、网格布局、动画特效、渐变与阴影等，结合150+实战案例，打造高端视觉界面。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 图书卡片3 -->
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=3" alt="《JavaScript高级编程》">
+                    </div>
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=3" alt="《JavaScript高级编程》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《JavaScript高级编程》</h4>
+                        <p class="book-author">前端技术联盟</p>
+                        <div class="book-price">
+                            <span class="original-price">¥109.9</span>
+                            <span class="current-price">¥79.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《JavaScript高级编程》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>前端技术联盟</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45680-2</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>前端架构出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-05-10</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★☆（4.7/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">深入讲解JavaScript引擎原理、异步编程、原型链、闭包、设计模式等高级知识点，配套框架源码分析案例。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+                        
+<div class="book-card">
+    <div class="book-img-wrapper">
+        <img src="https://picsum.photos/240/260?random=4" alt="《Python数据分析实战》">
+    </div>
+   
+    <div class="img-preview">
+        <img src="https://picsum.photos/500/750?random=4" alt="《Python数据分析实战》放大图">
+    </div>
+    <div class="book-info">
+        <h4>《Python数据分析实战》</h4>
+        <p class="book-author">数据科学实验室</p>
+        <div class="book-price">
+            <span class="original-price">¥119.9</span>
+            <span class="current-price">¥89.9</span>
+        </div>
+    </div>
+    
+    <div class="book-mask">
+        <h4 class="mask-title">《Python数据分析实战》</h4>
+        <div class="mask-detail-list">
+            <div class="mask-detail-item">
+                <span>作者：</span>
+                <span>数据科学实验室</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>ISBN：</span>
+                <span>978-7-121-45681-9</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>出版社：</span>
+                <span>数据技术出版社</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>出版时间：</span>
+                <span>2025-06-18</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>评分：</span>
+                <span>★★★★☆（4.9/5）</span>
+            </div>
+        </div>
+        <p class="mask-desc">基于Python 3.10+，涵盖NumPy、Pandas、Matplotlib核心工具，结合电商、金融、医疗真实数据集，教你从数据清洗到可视化全流程实战。</p>
+        <div class="mask-btns">
+            <a href="#" class="btn btn-accent">查看详情</a>
+            <button class="btn btn-danger add-to-cart">加入购物车</button>
+        </div>
+    </div>
+</div>
+            </div>
+
+           
+            <div class="section-header mt-32">
+                <h2>新书上市</h2>
+                <a href="#" class="more-link">查看更多</a>
+            </div>
+            <table class="new-book-table">
+                <thead>
+                    <tr>
+                        <<<th>书名</</</th>
+                        <<<th>作者</</</th>
+                        <<<th>定价</</</th>
+                        <<<th>上市时间</</</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>《响应式布局实战》</td>
+                        <td>王样式</td>
+                        <td>¥55.9</td>
+                        <td>2025-10-20</td>
+                    </tr>
+                    <tr>
+                        <td>《Vue3从入门到实战》</td>
+                        <td>李框架</td>
+                        <td>¥89.9</td>
+                        <td>2025-10-25</td>
+                    </tr>
+                    <tr>
+                        <td>《React生态系统》</td>
+                        <td>张组件</td>
+                        <td>¥95.9</td>
+                        <td>2025-10-30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+       
+        <aside class="sidebar right-sidebar">
+            <div class="sidebar-title">
+                <span class="icon">🔥</span>
+                <h3>限时促销</h3>
+            </div>
+            <div class="promo-card">
+                <div class="promo-badge">限时</div>
+                <h4>全场图书满减</h4>
+                <p>满100减30</p>
+                <p>满200减70</p>
+                <p class="promo-time">活动时间：2025.11.01-2025.11.10</p>
+                <a href="#" class="promo-btn">立即抢购</a>
+            </div>
+
+            <div class="sidebar-title mt-20">
+                <span class="icon">📢</span>
+                <h3>平台公告</h3>
+            </div>
+            <ul class="notice-list">
+                <li><a href="#">11.11大促活动预告：全场低至5折</a></li>
+                <li><a href="#">新用户注册送50元券包（无门槛使用）</a></li>
+                <li><a href="#">图书配送时效升级：全国3日达</a></li>
+                <li><a href="#">消费满50送抽奖机会一次！几率获得神秘大奖</a></li>
+                <li><a href="#">品质甄选，有几率获得作者签名！</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 知阅图书数字展销平台 | 打造高品质阅读体验</p>
+            <p>联系我们：<a href="mailto:service@zhiyuebook.com">service@zhiyuebook.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+       
+        const addToCartBtns = document.querySelectorAll('.add-to-cart');
+        const cartToast = document.getElementById('cartToast');
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartToast.classList.add('show');
+                setTimeout(() => {
+                    cartToast.classList.remove('show');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

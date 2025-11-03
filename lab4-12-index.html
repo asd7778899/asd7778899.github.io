@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>知阅图书 - 数字展销平台</title>
     <style>
-        /* 基础重置 + 全局变量 */
+        
         :root {
             --primary: #2c3e50;
             --primary-light: #34495e;
@@ -292,6 +292,55 @@
             opacity: 1;
             margin-right: 4px;
         }
+        
+.category-list a {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+.category-list a::before {
+    content: "→";
+    font-size: 12px;
+    color: var(--accent);
+    opacity: 0;
+    transition: var(--transition);
+}
+.category-list a:hover {
+    background-color: var(--light-bg);
+    color: var(--accent);
+}
+.category-list a:hover::before {
+    opacity: 1;
+    margin-right: 4px;
+}
+
+.category-list a::after {
+    content: attr(data-desc); 
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10px;
+    padding: 8px 12px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 100; 
+    box-shadow: var(--shadow-sm);
+}
+.category-list a:hover::after {
+    opacity: 1;
+    visibility: visible; 
+}
         .sidebar-banner {
             margin-top: 24px;
             padding: 20px;
@@ -385,7 +434,7 @@
             transform: translateX(4px);
         }
 
-        /* 筛选栏（新增：按分类、价格筛选） */
+        
         .filter-bar {
             display: flex;
             align-items: center;
@@ -468,7 +517,7 @@
             background-color: var(--accent-hover);
         }
 
-        /* 内容区样式 */
+        
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -509,7 +558,7 @@
             transform: translateX(4px);
         }
 
-        /* 图书网格 + 图片放大预览（修复） */
+        
         .book-grid {
             display: flex;
             flex-wrap: wrap;
@@ -526,7 +575,7 @@
             transition: var(--transition);
             display: flex;
             flex-direction: column;
-            z-index: 10; /* 确保卡片层级低于预览图 */
+            z-index: 10; 
         }
         .book-card:hover {
             transform: translateY(-8px);
@@ -560,9 +609,9 @@
         .book-img-wrapper:hover img {
             transform: scale(1.08);
         }
-        /* 图片放大预览（修复：确保悬停显示） */
+        
         .img-preview {
-            position: fixed; /* 改为fixed避免卡片层级遮挡 */
+            position: fixed; 
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
@@ -572,11 +621,11 @@
             border-radius: 12px;
             box-shadow: var(--shadow-lg);
             overflow: hidden;
-            z-index: 999; /* 最高层级 */
+            z-index: 999; 
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
-            pointer-events: none; /* 避免遮挡其他操作 */
+            pointer-events: none; 
         }
         .book-img-wrapper:hover + .img-preview,
         .img-preview:hover {
@@ -591,7 +640,7 @@
             object-fit: cover;
         }
 
-        /* 图书信息 + 遮罩详情 */
+       
         .book-info {
             padding: 24px 20px;
             flex: 1;
@@ -702,7 +751,7 @@
             text-align: center;
         }
 
-        /* 新书表格 */
+       
         .new-book-table {
             width: 100%;
             border-collapse: separate;
@@ -734,7 +783,7 @@
             font-weight: 500;
         }
 
-        /* 购物车提示 */
+        
         .cart-toast {
             position: fixed;
             top: 50%;
@@ -772,7 +821,7 @@
             font-weight: 700;
         }
 
-        /* 页脚 */
+        
         .footer {
             background: linear-gradient(120deg, var(--primary), var(--primary-light));
             color: rgba(255, 255, 255, 0.85);
@@ -827,26 +876,26 @@
         </div>
     </header>
 
-    <!-- 主体布局 -->
+    
     <main class="container main-wrapper">
-        <!-- 左侧栏 -->
+        
         <aside class="sidebar left-sidebar">
             <div class="sidebar-title">
                 <span class="icon">📑</span>
                 <h3>图书分类</h3>
             </div>
             <ul class="category-list">
-                <li><a href="#">文学小说</a></li>
-                <li><a href="#">计算机技术</a></li>
-                <li><a href="#">人文历史</a></li>
-                <li><a href="#">生活百科</a></li>
-                <li><a href="#">经济管理</a></li>
-                <li><a href="#">军事理论</a></li>
-                <li><a href="#">形势政策</a></li>
-                <li><a href="#">艺术设计</a></li>
-                <li><a href="#">未来科幻</a></li>
-                <li><a href="#">恐怖惊悚</a></li>
-                <li><a href="#">艺术设计</a></li>
+    <li><a href="#" data-desc="包含小说、散文、诗歌等各类文学体裁的作品">文学小说</a></li>
+    <li><a href="#" data-desc="涵盖编程开发、软件技术、网络安全等计算机相关书籍">计算机技术</a></li>
+    <li><a href="#" data-desc="讲述人类历史事件、文化发展、人文思想的书籍">人文历史</a></li>
+    <li><a href="#" data-desc="涉及美食、健康、旅行、家居等日常生活的实用书籍">生活百科</a></li>
+    <li><a href="#" data-desc="包含企业管理、经济学原理、投资理财等相关内容">经济管理</a></li>
+    <li><a href="#" data-desc="涵盖绘画、音乐、设计、摄影等艺术相关的书籍">艺术设计</a></li>
+    <li><a href="#" data-desc="涵盖军事思想、国防建设、作战理论等内容的专业书籍">军事理论</a></li>
+    <li><a href="#" data-desc="分析国内外形势、解读政策导向的时政类书籍">形势政策</a></li>
+    <li><a href="#" data-desc="以未来科技、星际探索为背景的科幻文学作品">未来科幻</a></li>
+    <li><a href="#" data-desc="营造恐怖氛围、包含惊悚情节的悬疑类书籍">恐怖惊悚</a></li>
+    <li><a href="#" data-desc="历经时间考验、具有文学/思想价值的经典著作">经典书籍</a></li>
             </ul>
 
             <div class="sidebar-banner">
@@ -855,9 +904,9 @@
             </div>
         </aside>
 
-        <!-- 中间内容区 -->
+        
         <section class="content-area">
-            <!-- 新增：筛选栏（分类+价格筛选） -->
+            
             <div class="filter-bar">
                 <div class="filter-item">
                     <div class="filter-select">
@@ -892,18 +941,18 @@
                 <button class="filter-btn">筛选</button>
             </div>
 
-            <!-- 热门推荐 -->
+           
             <div class="section-header">
                 <h2>热门推荐</h2>
                 <a href="#" class="more-link">查看更多</a>
             </div>
             <div class="book-grid">
-                <!-- 图书卡片1 -->
+               
                 <div class="book-card">
                     <div class="book-img-wrapper">
                         <img src="https://picsum.photos/240/260?random=1" alt="《HTML5权威指南》">
                     </div>
-                    <!-- 图片放大预览（修复） -->
+                   
                     <div class="img-preview">
                         <img src="https://picsum.photos/500/750?random=1" alt="《HTML5权威指南》放大图">
                     </div>
@@ -947,7 +996,7 @@
                     </div>
                 </div>
 
-                <!-- 图书卡片2 -->
+               
                 <div class="book-card">
                     <div class="book-img-wrapper">
                         <img src="https://picsum.photos/240/260?random=2" alt="《CSS3实战手册》">
@@ -995,7 +1044,7 @@
                     </div>
                 </div>
 
-                <!-- 图书卡片3 -->
+               
                 <div class="book-card">
                     <div class="book-img-wrapper">
                         <img src="https://picsum.photos/240/260?random=3" alt="《JavaScript高级编程》">
@@ -1182,3 +1231,4 @@
     </script>
 </body>
 </html>
+

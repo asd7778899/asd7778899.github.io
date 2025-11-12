@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知阅图书 - 数字展销平台</title>
+    <link rel="stylesheet" href="book-store.css">   
+</head>
+<body>
+    
+    <div class="cart-toast" id="cartToast">已成功加入购物车</div>
+
+    
+    <header class="nav-fixed">
+        <div class="container nav-wrapper">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <div>
+                    <div class="logo-text">知阅图书</div>
+                    <div class="logo-subtext">数字展销平台</div>
+                </div>
+            </div>
+            <nav class="main-menu">
+                <!-- 导航栏右侧登录/注册按钮（跳转版） -->
+<div class="auth-btns">
+    <a href="login.html" class="login-btn">登录</a>
+    <a href="register.html" class="register-btn">注册</a>
+</div>
+                <ul>
+                    <li class="has-submenu">
+                        <a href="#">分类筛选</a>
+                        <div class="submenu">
+                            <a href="#">文学小说</a>
+                            <a href="#">计算机技术</a>
+                            <a href="#">人文历史</a>
+                            <a href="#">生活百科</a>
+                        </div>
+                    </li>
+                    <li><a href="#">热门推荐</a></li>
+                    <li><a href="#">新书上市</a></li>
+                    <li><a href="#">限时促销</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <main class="container main-wrapper">
+        
+        <aside class="sidebar left-sidebar">
+            <div class="sidebar-title">
+                <span class="icon">📑</span>
+                <h3>图书分类</h3>
+            </div>
+            <ul class="category-list">
+    <li><a href="#" data-desc="包含小说、散文、诗歌等各类文学体裁的作品">文学小说</a></li>
+    <li><a href="#" data-desc="涵盖编程开发、软件技术、网络安全等计算机相关书籍">计算机技术</a></li>
+    <li><a href="#" data-desc="讲述人类历史事件、文化发展、人文思想的书籍">人文历史</a></li>
+    <li><a href="#" data-desc="涉及美食、健康、旅行、家居等日常生活的实用书籍">生活百科</a></li>
+    <li><a href="#" data-desc="包含企业管理、经济学原理、投资理财等相关内容">经济管理</a></li>
+    <li><a href="#" data-desc="涵盖绘画、音乐、设计、摄影等艺术相关的书籍">艺术设计</a></li>
+    <li><a href="#" data-desc="涵盖军事思想、国防建设、作战理论等内容的专业书籍">军事理论</a></li>
+    <li><a href="#" data-desc="分析国内外形势、解读政策导向的时政类书籍">形势政策</a></li>
+    <li><a href="#" data-desc="以未来科技、星际探索为背景的科幻文学作品">未来科幻</a></li>
+    <li><a href="#" data-desc="营造恐怖氛围、包含惊悚情节的悬疑类书籍">恐怖惊悚</a></li>
+    <li><a href="#" data-desc="历经时间考验、具有文学/思想价值的经典著作">经典书籍</a></li>
+            </ul>
+
+            <div class="sidebar-banner">
+                <p>新人专享</p>
+                <p>首单立减20元</p>
+            </div>
+        </aside>
+
+        
+        <section class="content-area">
+            
+            <div class="filter-bar">
+                <div class="filter-item">
+                    <div class="filter-select">
+                        <span>图书分类</span>
+                        <span>▼</span>
+                    </div>
+                    <ul class="filter-dropdown">
+                        <li>全部分类</li>
+                        <li>文学小说</li>
+                        <li>计算机技术</li>
+                        <li>人文历史</li>
+                        <li>生活百科</li>
+                    </ul>
+                </div>
+                <div class="filter-item">
+                    <div class="filter-select">
+                        <span>价格区间</span>
+                        <span>▼</span>
+                    </div>
+                    <ul class="filter-dropdown">
+                        <li>全部价格</li>
+                        <li>0-50元</li>
+                        <li>50-100元</li>
+                        <li>100元以上</li>
+                    </ul>
+                </div>
+                <div class="filter-price">
+                    <input type="text" placeholder="最低价">
+                    <span>-</span>
+                    <input type="text" placeholder="最高价">
+                </div>
+                <button class="filter-btn">筛选</button>
+            </div>
+
+           
+            <div class="section-header">
+                <h2>热门推荐</h2>
+                <a href="#" class="more-link">查看更多</a>
+            </div>
+            <div class="book-grid">
+               
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=1" alt="《HTML5权威指南》">
+                    </div>
+                   
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=1" alt="《HTML5权威指南》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《HTML5权威指南》</h4>
+                        <p class="book-author">Web前端联盟</p>
+                        <div class="book-price">
+                            <span class="original-price">¥89.9</span>
+                            <span class="current-price">¥59.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《HTML5权威指南》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>Web前端联盟</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45678-9</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>前端技术出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-03-15</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★☆（4.8/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">HTML5+CSS3全栈开发教程，涵盖语义化标签、Canvas绘图、响应式布局等核心知识点，配套100+实战案例与源码。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=2" alt="《CSS3实战手册》">
+                    </div>
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=2" alt="《CSS3实战手册》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《CSS3实战手册》</h4>
+                        <p class="book-author">样式设计实验室</p>
+                        <div class="book-price">
+                            <span class="original-price">¥99.9</span>
+                            <span class="current-price">¥69.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《CSS3实战手册》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>样式设计实验室</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45679-6</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>视觉设计出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-04-20</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★★（4.9/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">聚焦CSS3核心特性：弹性布局、网格布局、动画特效、渐变与阴影等，结合150+实战案例，打造高端视觉界面。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="book-card">
+                    <div class="book-img-wrapper">
+                        <img src="https://picsum.photos/240/260?random=3" alt="《JavaScript高级编程》">
+                    </div>
+                    <div class="img-preview">
+                        <img src="https://picsum.photos/500/750?random=3" alt="《JavaScript高级编程》放大图">
+                    </div>
+                    <div class="book-info">
+                        <h4>《JavaScript高级编程》</h4>
+                        <p class="book-author">前端技术联盟</p>
+                        <div class="book-price">
+                            <span class="original-price">¥109.9</span>
+                            <span class="current-price">¥79.9</span>
+                        </div>
+                    </div>
+                    <div class="book-mask">
+                        <h4 class="mask-title">《JavaScript高级编程》</h4>
+                        <div class="mask-detail-list">
+                            <div class="mask-detail-item">
+                                <span>作者：</span>
+                                <span>前端技术联盟</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>ISBN：</span>
+                                <span>978-7-121-45680-2</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版社：</span>
+                                <span>前端架构出版社</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>出版时间：</span>
+                                <span>2025-05-10</span>
+                            </div>
+                            <div class="mask-detail-item">
+                                <span>评分：</span>
+                                <span>★★★★☆（4.7/5）</span>
+                            </div>
+                        </div>
+                        <p class="mask-desc">深入讲解JavaScript引擎原理、异步编程、原型链、闭包、设计模式等高级知识点，配套框架源码分析案例。</p>
+                        <div class="mask-btns">
+                            <a href="#" class="btn btn-accent">查看详情</a>
+                            <button class="btn btn-danger add-to-cart">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+                        
+<div class="book-card">
+    <div class="book-img-wrapper">
+        <img src="https://picsum.photos/240/260?random=4" alt="《Python数据分析实战》">
+    </div>
+   
+    <div class="img-preview">
+        <img src="https://picsum.photos/500/750?random=4" alt="《Python数据分析实战》放大图">
+    </div>
+    <div class="book-info">
+        <h4>《Python数据分析实战》</h4>
+        <p class="book-author">数据科学实验室</p>
+        <div class="book-price">
+            <span class="original-price">¥119.9</span>
+            <span class="current-price">¥89.9</span>
+        </div>
+    </div>
+    
+    <div class="book-mask">
+        <h4 class="mask-title">《Python数据分析实战》</h4>
+        <div class="mask-detail-list">
+            <div class="mask-detail-item">
+                <span>作者：</span>
+                <span>数据科学实验室</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>ISBN：</span>
+                <span>978-7-121-45681-9</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>出版社：</span>
+                <span>数据技术出版社</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>出版时间：</span>
+                <span>2025-06-18</span>
+            </div>
+            <div class="mask-detail-item">
+                <span>评分：</span>
+                <span>★★★★☆（4.9/5）</span>
+            </div>
+        </div>
+        <p class="mask-desc">基于Python 3.10+，涵盖NumPy、Pandas、Matplotlib核心工具，结合电商、金融、医疗真实数据集，教你从数据清洗到可视化全流程实战。</p>
+        <div class="mask-btns">
+            <a href="#" class="btn btn-accent">查看详情</a>
+            <button class="btn btn-danger add-to-cart">加入购物车</button>
+        </div>
+    </div>
+</div>
+            </div>
+            <!-- 图书推荐订阅表单 -->
+<div class="subscribe-form">
+    <h2>图书推荐订阅</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="name">用户名</label>
+                    <input type="text" id="name" class="form-control" placeholder="请输入用户名" required>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" class="form-control" placeholder="请输入邮箱" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label>性别</label>
+                    <div style="display: flex; gap: 12px;">
+                        <label><input type="radio" name="gender" value="male" checked> 男</label>
+                        <label><input type="radio" name="gender" value="female"> 女</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="city">城市</label>
+                    <select id="city" class="form-control" required>
+                        <option value="">请选择城市</option>
+                        <option value="beijing">北京</option>
+                        <option value="shanghai">上海</option>
+                        <option value="guangzhou">广州</option>
+                        <option value="shenzhen">深圳</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label>兴趣分类</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                        <label><input type="checkbox" name="interests" value="literature"> 文学小说</label>
+                        <label><input type="checkbox" name="interests" value="tech"> 计算机技术</label>
+                        <label><input type="checkbox" name="interests" value="history"> 人文历史</label>
+                        <label><input type="checkbox" name="interests" value="life"> 生活百科</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="avatar">上传头像</label>
+            <div class="file-upload btn btn-accent">
+                <span>选择文件</span>
+                <input type="file" id="avatar" name="avatar" accept="image/*">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="comment">订阅说明</label>
+            <textarea id="comment" class="form-control" placeholder="请输入订阅说明" required></textarea>
+        </div>
+        <div class="form-btn-group">
+            <button type="submit" class="btn btn-accent">提交</button>
+            <button type="reset" class="btn" style="background: var(--light-bg); color: var(--text-main);">重置</button>
+        </div>
+    </form>
+</div>
+           
+            <div class="section-header mt-32">
+                <h2>新书上市</h2>
+                <a href="#" class="more-link">查看更多</a>
+            </div>
+            <table class="new-book-table">
+                <thead>
+                    <tr>
+                        <<<th>书名</</</th>
+                        <<<th>作者</</</th>
+                        <<<th>定价</</</th>
+                        <<<th>上市时间</</</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>《响应式布局实战》</td>
+                        <td>王样式</td>
+                        <td>¥55.9</td>
+                        <td>2025-10-20</td>
+                    </tr>
+                    <tr>
+                        <td>《Vue3从入门到实战》</td>
+                        <td>李框架</td>
+                        <td>¥89.9</td>
+                        <td>2025-10-25</td>
+                    </tr>
+                    <tr>
+                        <td>《React生态系统》</td>
+                        <td>张组件</td>
+                        <td>¥95.9</td>
+                        <td>2025-10-30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+       
+        <aside class="sidebar right-sidebar">
+            <div class="sidebar-title">
+                <span class="icon">🔥</span>
+                <h3>限时促销</h3>
+            </div>
+            <div class="promo-card">
+                <div class="promo-badge">限时</div>
+                <h4>全场图书满减</h4>
+                <p>满100减30</p>
+                <p>满200减70</p>
+                <p class="promo-time">活动时间：2025.11.01-2025.11.10</p>
+                <a href="#" class="promo-btn">立即抢购</a>
+            </div>
+
+            <div class="sidebar-title mt-20">
+                <span class="icon">📢</span>
+                <h3>平台公告</h3>
+            </div>
+            <ul class="notice-list">
+                <li><a href="#">11.11大促活动预告：全场低至5折</a></li>
+                <li><a href="#">新用户注册送50元券包（无门槛使用）</a></li>
+                <li><a href="#">图书配送时效升级：全国3日达</a></li>
+                <li><a href="#">消费满50送抽奖机会一次！几率获得神秘大奖</a></li>
+                <li><a href="#">品质甄选，有几率获得作者签名！</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 知阅图书数字展销平台 | 打造高品质阅读体验</p>
+            <p>联系我们：<a href="mailto:service@zhiyuebook.com">service@zhiyuebook.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+       
+        const addToCartBtns = document.querySelectorAll('.add-to-cart');
+        const cartToast = document.getElementById('cartToast');
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartToast.classList.add('show');
+                setTimeout(() => {
+                    cartToast.classList.remove('show');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

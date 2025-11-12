@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录 - 知阅图书</title>
+    <style>
+        /* 复用主页面全局样式，保证风格统一 */
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --danger: #e74c3c;
+            --light-bg: #f8fafc;
+            --card-bg: #fff;
+            --text-main: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            background: var(--light-bg);
+            line-height: 1.6;
+            padding: 80px 0;
+        }
+        a { text-decoration: none; color: var(--accent); transition: var(--transition); }
+        a:hover { color: #2980b9; }
+        .container { width: 1280px; margin: 0 auto; padding: 0 16px; }
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 15px;
+        }
+        .btn-accent { background: var(--accent); color: #fff; }
+        .btn-accent:hover { background: #2980b9; box-shadow: 0 4px 8px rgba(52,152,219,0.2); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { background: var(--light-bg); border-color: var(--accent); color: var(--accent); }
+
+        /* 登录表单容器 */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 160px);
+        }
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 48px;
+            width: 450px;
+            text-align: center;
+        }
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .logo-icon { font-size: 32px; color: var(--accent); }
+        .logo-text { font-size: 28px; font-weight: 700; color: var(--primary); }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+        }
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .form-check input {
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-check label {
+            margin-bottom: 0;
+            font-weight: 400;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .btn-group .btn { flex: 1; }
+        .forgot-link {
+            display: block;
+            margin-bottom: 32px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .register-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <span class="logo-icon">📚</span>
+                    <div class="logo-text">知阅图书</div>
+                </div>
+                <form action="#" method="post">
+                    <!-- 用户名/邮箱输入框 -->
+                    <div class="form-group">
+                        <label for="username">用户名/邮箱</label>
+                        <input type="text" id="username" class="form-control" placeholder="请输入用户名或邮箱" required>
+                    </div>
+                    <!-- 密码输入框 -->
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+                    </div>
+                    <!-- 记住我勾选框 -->
+                    <div class="form-check">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">记住我（7天内自动登录）</label>
+                    </div>
+                    <!-- 功能按钮组 -->
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-accent">登录</button>
+                        <a href="register.html" class="btn btn-outline">注册</a>
+                    </div>
+                    <!-- 忘记密码链接 -->
+                    <a href="#" class="forgot-link">忘记密码？</a>
+                </form>
+                <!-- 注册引导文字 -->
+                <p class="register-link">还没有账号？<a href="register.html">立即注册</a>，新人首单立减20元</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

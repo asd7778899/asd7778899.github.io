@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户登录 - 知阅图书</title>
     <style>
-        /* 复用主页面全局样式，保证风格统一 */
+        
         :root {
             --primary: #2c3e50;
             --accent: #3498db;
@@ -45,7 +45,7 @@
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-outline:hover { background: var(--light-bg); border-color: var(--accent); color: var(--accent); }
 
-        /* 登录表单容器 */
+        
         .login-container {
             display: flex;
             justify-content: center;
@@ -139,30 +139,30 @@
                     <div class="logo-text">知阅图书</div>
                 </div>
                 <form action="#" method="post">
-                    <!-- 用户名/邮箱输入框 -->
+                    
                     <div class="form-group">
                         <label for="username">用户名/邮箱</label>
                         <input type="text" id="username" class="form-control" placeholder="请输入用户名或邮箱" required>
                     </div>
-                    <!-- 密码输入框 -->
+                    
                     <div class="form-group">
                         <label for="password">密码</label>
                         <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
                     </div>
-                    <!-- 记住我勾选框 -->
+                    
                     <div class="form-check">
                         <input type="checkbox" id="remember">
                         <label for="remember">记住我（7天内自动登录）</label>
                     </div>
-                    <!-- 功能按钮组 -->
+                    
                     <div class="btn-group">
                         <button type="submit" class="btn btn-accent">登录</button>
                         <a href="register.html" class="btn btn-outline">注册</a>
                     </div>
-                    <!-- 忘记密码链接 -->
+                    
                     <a href="#" class="forgot-link">忘记密码？</a>
                 </form>
-                <!-- 注册引导文字 -->
+                
                 <p class="register-link">还没有账号？<a href="register.html">立即注册</a>，新人首单立减20元</p>
             </div>
         </div>

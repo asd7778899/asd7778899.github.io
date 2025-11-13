@@ -75,7 +75,7 @@
             box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
         }
 
-        /* 固定导航栏 */
+        
         .nav-fixed {
             position: fixed;
             top: 0;
@@ -197,7 +197,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* 主体布局 */
+        
         .main-wrapper {
             display: flex;
             gap: 24px;
@@ -294,7 +294,7 @@
     border-radius: 8px;
     font-size: 15px;
 }
-/* 分类悬停解释框 */
+
 .category-list a::after {
     content: attr(data-desc);
     position: absolute;
@@ -854,7 +854,7 @@
         .footer a:hover {
             text-decoration: underline;
         }
-        /* 登录/注册按钮样式 */
+        
 .auth-btns { display: flex; gap: 12px; }
 .login-btn, .register-btn {
     padding: 8px 18px;
@@ -882,7 +882,7 @@
     background: #2980b9;
     box-shadow: 0 4px 8px rgba(52,152,219,0.2);
 }
-/* 订阅表单样式 */
+
 .subscribe-form {
     background: var(--card-bg);
     border-radius: 12px;
